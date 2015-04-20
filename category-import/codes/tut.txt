@@ -1,0 +1,87 @@
+Accordion tabs in magento For layered navigation
+
+Hi ,
+In this blog I’m going to explain you how to create accordion tabs in magento for layered navigation as displayed below for attributes.
+
+Just navigate to your layered navigation file as shown:
+
+<pre name="code" class="html">
+app/design/frontend/default/{your folder}/template/catelog/layer/view.phtml
+</pre>
+
+Then open that that file & paste the following jquery script at the end of the page:
+<pre name="code" class="html">
+<script>var $j= jQuery.noConflict();// no conflict method
+$j (document).ready(function(){
+$j("#narrow-by-list > dt").click(function(){
+if(false == $j(this).next().is(':visible')) {
+$j('#narrow-by-list dd').slideUp(300);
+}
+$j(this).next().slideToggle(300);
+});
+$j('#narrow-by-list dd').hide();
+$j('#narrow-by-list dd:eq(0)').show();
+});
+</script>
+</pre>
+
+#narrow-by-list is the id used in that file( <dl id=”narrow-by-list“>). If you used different id’s, replace this with your id and save the file. Refresh the cache and reload the browser to see the results. Use no-conflict method in magento. It is a good practice to avoid javascript conflicts in the page.
+
+************************************************************************************************
+Display all categories and sub categories on left sidebar in Magento
+
+You can display list of all categories and subcategories in left sidebar including product view page using the following code in Magento. You can display subcategories upto second level using this code. You can create a new file for this code and you can add it in your theme’s catalog XML file like this:
+
+<pre name="code" class="html">
+<block type="catalog/navigation" name="catalog.leftnav" template="catalog/navigation/my_left_nav.phtml" />
+</pre>
+
+It should be placed inside the reference name “left“, to show it in the left sidebar. I hope you know all these stuffs. Let’s get to the point. Just copy and paste the code in the my_left_nav.phtml, which should be in your theme’s catalog/navigation folder. 
+<pre name="code" class="html">
+<!-- List all categories and their second level subcategories -->
+<div class="block block-list block-categories">
+    <div id="block-categories" class="block-title active">
+        <strong><span>Categories </span></strong>
+    </div>
+
+<div id="leftnav" class="block-content" style="display:block">
+    <?php $helper = $this->helper('catalog/category') ?>
+    <?php $categories = $this->getStoreCategories() ?>
+    <?php if (count($categories) > 0): ?>
+        <ul id="leftnav-tree" class="level0">
+            <?php foreach($categories as $category): ?>
+                <li class="level0<?php if ($this->isCategoryActive($category)): ?> active<?php endif; ?>">
+                    <a href="<?php echo $helper->getCategoryUrl($category) ?>"><span><?php echo $this->escapeHtml($category->getName()) ?></span></a>
+                    <?php //if ($this->isCategoryActive($category)): ?>
+                        <?php $subcategories = $category->getChildren() ?>
+                        <?php if (count($subcategories) > 0): ?>
+                            <ul id="leftnav-tree-<?php echo $category->getId() ?>" class="level1">
+                                <?php foreach($subcategories as $subcategory): ?>
+                                    <li class="level1<?php if ($this->isCategoryActive($subcategory)): ?> active<?php endif; ?>">
+                                        <a href="<?php echo $helper->getCategoryUrl($subcategory) ?>"><?php echo $this->escapeHtml(trim($subcategory->getName(), '- ')) ?></a>
+                                         <?php $secondLevelSubcategories = $subcategory->getChildren() ?>
+                                         <?php if (count($secondLevelSubcategories ) > 0): ?>
+                            <ul id="leftnav-tree-<?php echo $subcategory->getId() ?>" class="level2">
+                                <?php foreach($secondLevelSubcategories as $secondLevelSubcategory ): ?>
+                                    <li class="level2<?php if ($this->isCategoryActive($secondLevelSubcategory )): ?> active<?php endif; ?>">
+                                        <a href="<?php echo $helper->getCategoryUrl($secondLevelSubcategory ) ?>"><?php echo $this->escapeHtml(trim($secondLevelSubcategory ->getName(), '- ')) ?></a>
+                                    </li>
+                                    <?php endforeach; ?>
+                            </ul>
+                            <script type="text/javascript">decorateList('leftnav-tree-<?php echo $category->getId() ?>', 'recursive')</script>
+                        <?php endif; ?>
+                                <?php endforeach; ?>
+                            </ul>
+                            <script type="text/javascript">decorateList('leftnav-tree-<?php echo $category->getId() ?>', 'recursive')</script>
+                        <?php endif; ?>
+                    <?php //endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <script type="text/javascript">decorateList('leftnav-tree', 'recursive')</script>
+    <?php endif; ?>
+</div>
+</div>
+</pre>
+
+*******************************************************************************************************************

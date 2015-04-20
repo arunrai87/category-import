@@ -1,0 +1,77 @@
+<?php
+/*  app/code/local/Oakwood/Skumodule/controllers/  
+
+ * @package    Oakwood_Skumodule
+
+ * @version    0.1.0
+
+ * @author     
+
+ */
+			
+class Oakwood_Skumodule_MagazoomcartController extends Mage_Core_Controller_Front_Action
+{
+  public function indexAction()
+    {
+ 	$data = trim(file_get_contents('php://input'));
+	//var_dump($data);
+	//exit();
+	$sessionid = $this->getTextBetweenTags($data,"sessionID");
+	$sku = $this->getTextBetweenTags($data,"sku");
+	$qty = $this->getTextBetweenTags($data,"qty");
+	//var_dump($sessionid);
+	//var_dump($sku);
+	//var_dump($qty);
+	//exit();
+	$CartUrl = 'http://test.mcfeelys.net/index.php/skumodule/magazoomcart';
+	$finalurl = $CartUrl.'?sid='.$sessionid;
+	echo $finalurl;
+	//die;
+	//$sessionid = ''. $this->getRequest()->getParam('sid');
+	//var_dump($sessionid);
+	return false;
+	//$psku = ''.$this->getRequest()->getParam('sku');
+	//$pqty = ''.$this->getRequest()->getParam('qty');
+	if(!$sessionid)
+	{
+		exit('hi');
+		$product = Mage::getModel('catalog/product');
+		$productid = $product->getIdBySku($psku);
+		$_product = Mage::getModel('catalog/product')->load($productid);
+		$params = array('qty' => $pqty);
+		$cart = Mage::getModel('checkout/cart');
+		$cart->init();
+		$cart->addProduct($_product,$params);
+		$cart->save();
+		Mage::getSingleton('checkout/session')->setCartWasUpdated(true);
+		$message = $this->__('product was successfully added to your shopping cart.');
+		Mage::getSingleton('checkout/session')->addSuccess($message);
+		 $CartUrl = Mage::getUrl('checkout/cart');
+		 Mage::app()->getFrontController()->getResponse()->setRedirect($CartUrl);
+		$CartUrl = Mage::getUrl('checkout/cart');
+		echo $CartUrl;
+	}
+	else
+	{
+		exit('hi else');
+		$CartUrl = 'http://test.mcfeelys.net/index.php/skumodule/magazoomcart';
+		$finalurl = $CartUrl.'?sid='.$sessionid.'&sku='.$psku.'&qty='.$pqty;
+		echo $finalurl;
+	}
+	
+    }
+	
+public function getTextBetweenTags($string, $tagname) {
+     $pattern = "/<$tagname ?.*>(.*)<\/$tagname>/";
+    preg_match($pattern, $string, $matches);
+    return $matches[1];
+}
+  public function showAction()
+  {
+$uri =  $_SERVER["REQUEST_URI"]; //it will print full url
+$uriArray = explode('/', $uri); //convert string into array with explode
+$id = explode('?', $uriArray[2]);;
+var_dump($id);
+	 die;'</pre>';
+         }
+}

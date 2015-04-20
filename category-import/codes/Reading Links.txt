@@ -1,0 +1,53 @@
+1.File upload and review 
+
+https://blueimp.github.io/jQuery-File-Upload/
+
+2.popup window in magento.
+
+http://prototype-window.xilinus.com/samples.html
+
+3. magento tut
+
+http://magebase.com/magento-tutorials/
+
+4. magento tut
+http://www.pixafy.com/blog/tag/magento/
+
+5. mage tut
+
+http://blog.magestore.com/category/magento-training/magento-tutorials/
+
+6.xml links.
+
+http://stackoverflow.com/questions/15234167/how-do-i-properly-display-a-child-block-within-its-parent-in-magento
+
+Magento tut :-
+
+http://chillydraji.wordpress.com/category/magento-2/page/7/
+
+Magento tut :-
+
+http://www.atwix.com/magento/
+
+http://stackoverflow.com/questions/24567979/set-payment-method-cash-on-delivery-on-particular-state-only/24568989
+
+http://magento.stackexchange.com/questions/26030/disallow-invoice-option-when-organisation-in-billing-post-array-is-not-set-to-1?rq=1
+
+http://magento.stackexchange.com/questions/26013/set-rules-for-payment-information-on-onepage-checkout
+
+http://www.justwebdevelopment.com/blog/display-product-image-in-invoice-magento/
+
+http://magento.stackexchange.com/questions/4012/changing-the-address-book-drop-down-for-shipping-from-drop-down-list-to-radio
+or
+
+http://hkpatel201.blogspot.in/2013/04/change-shipping-address-dropdown-at.html
+
+wordpress
+http://www.sitepoint.com/wordpress/page/3/
+
+tablerate generation :-
+http://elgentos.nl/tablerates/
+
+Php,css.jquery imp.  
+http://demo.phpgang.com/
+

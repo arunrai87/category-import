@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--  app/code/local/Oakwood/Skumodule  -->
+<config>
+		<modules>
+			<Oakwood_Skumodule>
+				<version>0.1.0</version>
+			</Oakwood_Skumodule>
+		</modules>
+		  <frontend>
+			<routers>
+				<skumodule>
+					<use>standard</use>
+					<args>
+						<module>Oakwood_Skumodule</module>
+						<frontName>skumodule</frontName>  
+						</args>
+				</skumodule>
+			</routers>
+				<!--layout>
+				<updates>
+				<test>
+				<file>skumodule.xml</file>
+				</test>
+				</updates>
+			</layout-->
+		</frontend>
+	<global>
+		<blocks>
+			<skumodule>
+				 <class>Oakwood_Skumodule_Block</class>
+			</skumodule>
+		 </blocks>
+			<models>
+				<skumodule>
+					<class>Oakwood_Skumodule_Model</class>
+				</skumodule>
+			</models>
+		<helpers>
+            <skumodule>
+                <class>Oakwood_Skumodule_Helper</class> 
+			</skumodule>
+        </helpers>
+
+	</global>
+		
+</config>

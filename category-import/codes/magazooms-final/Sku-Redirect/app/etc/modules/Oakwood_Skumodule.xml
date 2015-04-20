@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<!--  app/etc/modules  -->
+<config>
+
+    <modules>
+
+        <Oakwood_Skumodule>
+
+            <active>true</active>
+
+            <codePool>local</codePool>
+
+        </Oakwood_Skumodule>
+
+    </modules>
+
+</config> 
