@@ -1,0 +1,22 @@
+
+	<a href="<?php echo Mage::getUrl('test/index/save') ?>" >add</a>
+	<table style="border:1px solid black">
+	<tr><td>Name</td><td>Email</td><td>Address</td><td>Action</td></tr>
+	<?php
+
+$data1= $this->methodblock();
+foreach($data1 as $data)
+        {  ?>
+	<tr>
+	<td><?php echo $data->getData('username')   ?></td>
+	<td><?php echo $data->getData('email')   ?></td>
+	<td><?php echo $data->getData('address')   ?></td>
+	<td> <a href="<?php echo Mage::getUrl('test/index/edit/',array('id'=>$data->getData('id'))); ?>" >Edit</a> | <a href="<?php echo Mage::getUrl('test/index/delete',array('id'=>$data->getData('id'))) ;?>" >Delete</a></td>
+	</tr>
+	
+	     <?php    }
+?>
+	
+	</table>	
+             
+

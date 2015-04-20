@@ -1,0 +1,13 @@
+enable admin template path hints in magento 
+
+to enable :- 
+INSERT INTO core_config_data (scope, scope_id, path, value)
+VALUES ('default', 0, 'dev/debug/template_hints', 1),
+('default', 0, 'dev/debug/template_hints_blocks', 1);
+
+To disable:-
+
+INSERT INTO core_config_data (scope, scope_id, path, value)
+VALUES ('default', 0, 'dev/debug/template_hints', 0),
+('default', 0, 'dev/debug/template_hints_blocks', 0)
+ON DUPLICATE KEY UPDATE value=values(value)

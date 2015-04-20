@@ -1,0 +1,171 @@
+<?php
+
+class Mage_Sintax_Adminhtml_MyformController extends Mage_Adminhtml_Controller_Action
+{
+/************************************************************************/
+    public function indexAction()
+    {
+        $this->loadLayout()->renderLayout();
+    }
+
+public function updateproduct() {
+$mageFilename = Mage::getBaseDir('app') . DS.'Mage.php';
+require_once $mageFilename;
+Mage::setIsDeveloperMode(true);
+ini_set('display_errors', 1);
+umask(0);
+Mage::app('admin');
+Mage::register('isSecureArea', 1);
+Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
+ 
+set_time_limit(0);
+ini_set('memory_limit','1024M');
+ 
+/***************** UTILITY FUNCTIONS ********************/
+  $path = Mage::getBaseDir('media') . DS . 'csvfile' . DS; 
+	$files = glob($path.'*'); // get all file names
+		foreach($files as $file){ // iterate files		
+$csv                = new Varien_File_Csv();
+$data               = $csv->getData($file); //path to csv
+}
+array_shift($data);
+ foreach($data as $_data){
+ /* $img = explode('\\',$_data[43]);
+	var_dump($img[2]);*/
+ 	if($_data[0]){
+		$api = new Mage_Catalog_Model_Product_Api();     
+		$attribute_api = new Mage_Catalog_Model_Product_Attribute_Set_Api();
+		$attribute_sets = $attribute_api->items();     
+		$productData = array(); 
+	 // $productData['website_ids'] = array(1); 
+	  //$productData['categories'] = array(23); 
+		$productData['price'] = 5;
+		$productData['tax_class_id'] =2;
+		$productData['name'] = utf8_encode($_data[0]);
+		$productData['status'] = 1;     
+		$productData['sku'] = $_data[0].'new';
+		$productData['description'] = utf8_encode($_data[1]);
+		$productData['short_description'] = utf8_encode($_data[2]);   
+		$productData['pr_additionallinetext'] = $_data[3];	
+		$productData['web_text'] = $_data[4];	
+		$productData['pr_alias'] = $_data[5];
+		$productData['pr_numberperpallet'] = $_data[6];
+		$productData['pr_numbersalesperunit'] = $_data[7];
+		$productData['pr_numbersalesperunitdevice'] = $_data[8];
+		$productData['pr_grossweight'] = $_data[9];
+		$productData['pr_demovideo'] = $_data[10];
+		$productData['pr_eansalesunit'] = $_data[11];
+		$productData['pr_dangerousgoods'] = $_data[18];
+		$productData['pr_color'] = $_data[19];
+		$productData['pr_foodapprovals'] = $_data[20];
+		$productData['pr_packages'] = $_data[21];
+		$productData['pr_saleonlyinpackages'] = $_data[22];
+		$productData['pr_onlysalesinpack'] = $_data[23];
+		$productData['pr_saleonlyinpallet'] = $_data[24];
+		$productData['pr_supplieritemnumber'] = $_data[25];
+		$productData['pr_food'] = $_data[26];
+		$productData['pr_environmentalcode'] = $_data[27];
+		$productData['weight'] = $_data[28];
+		$productData['pr_originalitemnumber'] = $_data[29];
+		$productData['pr_productdatasheets'] = $_data[30];
+		$productData['pr_kubicvolumed3salesunit'] = $_data[31];
+		$productData['pr_materialsafetydatasheets'] = $_data[32];
+		$productData['pr_blocked'] = $_data[33];
+		$productData['pr_technicaldatasheet'] = $_data[34];
+		$productData['pr_tariffitem'] = $_data[35];
+		$productData['pr_thicknessmm'] = $_data[36];
+		$productData['pr_thicknessmicrons'] = $_data[37];
+		$productData['pr_unspsc'] = $_data[38];
+		$productData['pr_productpostinggroup'] = $_data[39];
+		$productData['pr_productwidthsalesunit'] = $_data[40];
+		$productData['pr_productheightsalesunit'] = $_data[41];
+		$productData['pr_productlengthsalesunit'] = $_data[42];
+		$productData['pr_webhierarchy'] = $_data[47];
+		$productData['pr_art'] = $_data[48];
+		$productData['pr_format'] = $_data[49];
+		//$productData['page_layout'] ='two_columns_left';         
+		$new_product_id = $api->create('simple',$attribute_sets[0]['set_id'],'ND3',$productData);     
+		/* ============ Product Stock section ===========*/
+		$stockItem = Mage::getModel('cataloginventory/stock_item');
+		$stockItem->loadByProduct( $new_product_id );     
+		$stockItem->setData('use_config_manage_stock', 1);
+		$stockItem->setData('qty', $_data[6]);
+		$stockItem->setData('min_qty', 0);
+		$stockItem->setData('use_config_min_qty', 1);
+		$stockItem->setData('min_sale_qty', 0);
+		$stockItem->setData('use_config_max_sale_qty', 1);
+		$stockItem->setData('max_sale_qty', 0);
+		$stockItem->setData('use_config_max_sale_qty', 1);
+		$stockItem->setData('is_qty_decimal', 0);
+		$stockItem->setData('backorders', 0);
+		$stockItem->setData('notify_stock_qty', 0);
+		$stockItem->setData('is_in_stock',1);
+		$stockItem->setData('tax_class_id', 0);		 
+		$stockItem->save();
+	/* ============ Product Images section ===========*/ 
+		$product = Mage::getModel('catalog/product')->load($new_product_id);
+		 $mediap = Mage::getBaseDir('media');
+		$product->setMediaGallery (array('images'=>array (), 'values'=>array ()));
+		$product->addImageToMediaGallery ($mediap.'/import/1.jpg', array ('small_image'), false, false); 
+		$product->addImageToMediaGallery ($mediap.'/import/2.jpg', array ('thumbnail'), false, false); 
+		$product->addImageToMediaGallery ($mediap.'/import/3.jpg', array ('image'), false, false); 
+		/*$product->addImageToMediaGallery ($mediap.'/import/'.$_data[13], array ('image'), false, false); 
+		$product->addImageToMediaGallery ($mediap.'/import/'.$_data[14], array ('image'), false, false); 
+		$product->addImageToMediaGallery ($mediap.'/import/'.$_data[15], array ('image'), false, false); 
+		$product->addImageToMediaGallery ($mediap.'/import/'.$_data[16], array ('image'), false, false); 
+		$product->addImageToMediaGallery ($mediap.'/import/'.$_data[17], array ('image'), false, false); */
+		Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID); 
+		$product->save();
+		// echo 'Product Created Named with :- '.$_data[0].'<br />';
+} // end if
+	} // end foreach
+}
+  /************************************************************************/  
+    public function postAction()
+    {
+	/* Code to delete files from directory media/csvfile */
+	   $path = Mage::getBaseDir('media') . DS . 'csvfile' . DS; 
+		$files = glob($path.'/*'); // get all file names
+		foreach($files as $file){ // iterate files
+		unlink($file); // delete file
+		}
+	/*     */
+		if(isset($_FILES['docname']['name']) && $_FILES['docname']['name'] != '')
+{
+    try
+    {      
+        $path = Mage::getBaseDir('media') . DS . 'csvfile' . DS;  //desitnation directory    
+        $fname = $_FILES['docname']['name']; //file name                       
+        $uploader = new Varien_File_Uploader('docname'); //load class
+        $uploader->setAllowedExtensions(array('csv')); //Allowed extension for file
+        $uploader->setAllowCreateFolders(true); //for creating the directory if not exists
+        $uploader->setAllowRenameFiles(false); //if true, uploaded file's name will be changed, if file with the same name already exists directory.
+        $uploader->setFilesDispersion(false);
+        $uploader->save($path,$fname); //save the file on the specified path
+		$this->updateproduct(); 
+		  $message = $this->__('Your Product has been Imported successfully.');
+         Mage::getSingleton('adminhtml/session')->addSuccess($message);
+        
+    }
+    catch (Exception $e)
+    {
+      Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+    }
+}
+	
+        $this->_redirect('*/*');
+    }
+	/************************************************************************/
+/*********************** function for call  update product function *************************************************/
+	public function updateDataAction() {
+	$csvfilename = ''.$this->getRequest()->getPost('csv_file');
+	//echo $csvfilename;
+	
+	$this->updateproduct(); 
+		  $message = $this->__('Your Product has been updated successfully.');
+         Mage::getSingleton('adminhtml/session')->addSuccess($message);
+		       $this->_redirect('*/*');
+		
+}
+/************************************************************************/
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+  <config>
+     <modules>
+        <Pfay_Test>
+          <version>1.0.0</version>
+        </Pfay_Test>
+     </modules>
+     <frontend>
+       <routers>
+          <test>
+              <use>standard</use>
+              <args>
+                 <module>Pfay_Test</module>
+                 <frontName>test</frontName>
+              </args>
+           </test>
+       </routers>
+		<layout>
+			<updates>
+			<test>
+			<file>test.xml</file>
+			</test>
+			</updates>
+		</layout>
+ </frontend>
+<global>
+
+     <blocks>
+         <test>
+              <class>Pfay_Test_Block</class>
+         </test>
+      </blocks>
+	  <models>
+<test>
+     <class>Pfay_Test_Model</class>
+     <resourceModel>test_mysql4</resourceModel>
+ </test>
+<test_mysql4>
+     <class>Pfay_Test_Model_Mysql4</class>
+     <entities>
+         <test>
+           <table>test</table>
+         </test>
+      </entities>
+</test_mysql4>
+</models>
+    <!-- allow the plugin to read and write -->
+<resources>
+        <!-- connection to write -->
+        <test_write>
+            <connection>
+                <use>core_write</use>
+            </connection>
+        </test_write>
+        <!-- connection to read -->
+       <test_read>
+          <connection>
+             <use>core_read</use>
+          </connection>
+       </test_read>
+</resources>
+</global>
+</config>
+

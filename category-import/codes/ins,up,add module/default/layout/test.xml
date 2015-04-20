@@ -1,0 +1,24 @@
+<layout version="0.1.0">
+     <default>
+	 <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+          
+      </default>
+      <test_index_index>
+           <reference name="content">
+                <block type="test/monblock"  name="afficher_monbloc"
+                          template="test/afficher.phtml" />
+           </reference>
+      </test_index_index>
+ <test_index_save>	 
+           <reference name="content">
+ <block type="test/add"  name="test_index" template="test/add.phtml" />
+           </reference>
+ </test_index_save>
+ <test_index_edit>	 
+           <reference name="content">
+ <block type="test/monblock"  name="test_index" template="test/edit.phtml" />
+           </reference>
+ </test_index_edit>
+</layout>
