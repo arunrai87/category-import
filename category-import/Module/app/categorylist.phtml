@@ -1,0 +1,32 @@
+<div class="category-wrapper">
+	<?php
+		$categories = Mage::getSingleton('catalog/category')
+		->getCollection()
+		->addAttributeToSelect('name')
+		->addIsActiveFilter()
+		->setOrder('name', 'ASC')
+		->addFieldToFilter('level', array('eq' => '3'));
+		foreach($categories as $_categories){ 
+		if(intval($_categories->getChildrenCount()) != 0)
+		{
+			
+		?>		
+			<div class="categroy-row">
+				<span class="category-name"><a href="<?php echo $_categories->getUrl();?>"><?php echo $_categories->getName(); ?></a></span>
+			<ul class="categories-ul">
+			<?php 	$children = Mage::getModel('catalog/category')->load($_categories->getId())->getChildrenCategories();
+					foreach($children as $child){ ?>
+						<li class="child-categories item"><a href="<?php echo $child->getUrl();?>"><?php echo $child->getName(); ?></a></li>
+			<?php 		} ?>
+			</ul>
+			</div>
+		<?php	} }		?>
+	
+</div>
+<style>
+.category-name > a {  text-decoration: none;  color: #0654ba;  font-size: 15px;  font-weight: bold; }
+.category-wrapper {  width: 100%;}
+.categroy-row {  display: inline-table ;  height: unset;  padding: 4px;  width: 23%; }
+.child-categories.item {  list-style: outside none none;}
+.child-categories.item > a {  color: #666;  line-height: 20px;}
+<style>
